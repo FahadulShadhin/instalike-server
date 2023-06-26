@@ -1,0 +1,20 @@
+{
+	"name": "instalike",
+	"version": "1.0.0",
+	"description": "Instagram-like platform to showcase cool images",
+	"main": "server.js",
+	"scripts": {
+		"dev": "nodemon server.js"
+	},
+	"author": "Shadhin",
+	"license": "MIT",
+	"dependencies": {
+		"colors": "^1.4.0",
+		"express": "^4.18.2",
+		"pg": "^8.11.0"
+	},
+	"devDependencies": {
+		"dotenv": "^16.3.1",
+		"nodemon": "^2.0.22"
+	}
+}
