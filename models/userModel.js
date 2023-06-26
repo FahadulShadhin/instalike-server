@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const { client } = require('../config/db');
 
 const queryUserById = asyncHandler(async (id) => {
-	const data = await client.query(`SELECT * FROM users WHERE email= $1;`, [id]);
+	const data = await client.query(`SELECT * FROM users WHERE id= $1;`, [id]);
 	return data;
 });
 
