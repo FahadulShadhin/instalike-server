@@ -1,9 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const {
-	queryUserById,
-	queryUserByEmail,
-	createUser,
-} = require('../models/userModel');
+const { queryUserByEmail, createUser } = require('../models/userModel');
 const variables = require('../config/variables');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
