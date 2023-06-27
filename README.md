@@ -14,7 +14,7 @@ APIs for a Instagram-like platform where users can showcase their images.
 
 ## Setup:
 
-- Requires `node >= 18.14.0`, `yarn >= 1.22.19`
+- Requires `node >= 18.14.0` and `yarn >= 1.22.19`
 - Clone the repository
 - `cd` to root directory
 - Install the dependencies: `yarn install`
@@ -27,7 +27,7 @@ APIs for a Instagram-like platform where users can showcase their images.
 
 Before running the server setup your postgres database.
 
-- Requires `PostgreSQL == 15.3`
+- Requires `PostgreSQL >= 15.3`
 - Create `.env` in the root directory
 - Give your postgres infos in `.env`:
 
