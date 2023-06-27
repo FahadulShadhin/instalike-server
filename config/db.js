@@ -13,9 +13,11 @@ const client = new Client({
 const connectDB = asyncHandler(async () => {
 	try {
 		await client.connect();
-		console.log('pgdb connected...'.cyan);
-	} catch (error) {
-		console.log(`${error.message}`.red);
+		console.log(
+			`>>> PostgreSQL connected at PORT ${variables.pgPort}`.cyan.underline
+		);
+	} catch (err) {
+		console.log(`Error: ${err.message}`.red);
 	}
 });
 
