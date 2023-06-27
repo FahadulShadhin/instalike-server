@@ -5,7 +5,7 @@ const {
 	getUserProfile,
 	updateUserProfile,
 	deleteAccount,
-} = require('../controllers/userControllers');
+} = require('../controllers/userController');
 const { authenticate } = require('../middlewares/authMIddleware');
 
 const router = express.Router();
