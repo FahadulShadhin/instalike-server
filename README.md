@@ -27,7 +27,7 @@ APIs for a Instagram-like platform where users can showcase their images.
 
 Before running the server setup your postgres database.
 
-- Version: `postgreSQL == 15.3`
+- Requires `PostgreSQL == 15.3`
 - Create `.env` in the root directory
 - Give your postgres infos in `.env`:
 
