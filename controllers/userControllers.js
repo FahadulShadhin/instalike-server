@@ -4,6 +4,7 @@ const {
 	createUser,
 	queryUserById,
 	updateUser,
+	deleteUser,
 } = require('../models/userModel');
 const variables = require('../config/variables');
 const md5 = require('md5');
@@ -106,7 +107,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 		const userId = req.params.userId;
 		const data = await queryUserById(userId);
 		const user = data.rows;
-		if (!user) {
+		if (user.length === 0) {
 			return res.status(404).send({ message: 'User not found.' });
 		}
 		res.status(200).send({ message: 'Success', data: user });
@@ -118,7 +119,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 });
 
 //@description     Update user details
-//@route           POST /api/user/:userId
+//@route           PUT /api/user/:userId
 //@access          Protected
 const updateUserProfile = asyncHandler(async (req, res) => {
 	const userId = req.params.userId;
@@ -133,7 +134,25 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 		);
 		return res.status(200).send({ message: 'Update successful.' });
 	} catch (err) {
-		res.status(500).send({ message: 'Unexpected error while updating info.' });
+		res
+			.status(500)
+			.send({ message: 'Unexpected error occured while updating info.' });
+	}
+});
+
+//@description     Delete user account
+//@route           DELETE /api/user/:userId
+//@access          Protected
+const deleteAccount = asyncHandler(async (req, res) => {
+	const userId = req.params.userId;
+
+	try {
+		await deleteUser(userId);
+		return res.status(200).send({ message: 'Account deleted successfully.' });
+	} catch (err) {
+		return res
+			.status(500)
+			.send({ message: 'Unexpected error occured while deleting user.' });
 	}
 });
 
@@ -142,4 +161,5 @@ module.exports = {
 	authenticateUser,
 	getUserProfile,
 	updateUserProfile,
+	deleteAccount,
 };
