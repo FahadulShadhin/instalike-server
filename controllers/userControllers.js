@@ -17,7 +17,9 @@ const registerUser = asyncHandler(async (req, res) => {
 			});
 		}
 		try {
-			const userAlreadyExists = await queryUserByEmail(email);
+			const data = await queryUserByEmail(email);
+			const userAlreadyExists = data.rows;
+
 			if (userAlreadyExists.length !== 0) {
 				return res
 					.status(400)
@@ -67,11 +69,12 @@ const authenticateUser = asyncHandler(async (req, res) => {
 					.status(400)
 					.send({ message: 'User not registered. Please sign up.' });
 			} else {
-				if (user[0].password !== md5(password)) {
+				const pass = user[0].basic_info.password;
+				if (pass !== md5(password)) {
 					return res.status(400).send({ message: 'Incorrect password' });
 				}
 				const token = jwt.sign(
-					{ id: user[0].id, email: user[0].email },
+					{ id: user[0].id, email: user[0].basic_info.email },
 					variables.jwtSecretKey
 				);
 				return res

@@ -7,17 +7,17 @@ const queryUserById = asyncHandler(async (id) => {
 });
 
 const queryUserByEmail = asyncHandler(async (email) => {
-	const data = await client.query(`SELECT * FROM users WHERE email= $1;`, [
-		email,
-	]);
+	const data = await client.query(
+		`SELECT * FROM users WHERE basic_info->>'email' = $1;`,
+		[email]
+	);
 	return data;
 });
 
 const createUser = asyncHandler(async (username, email, password) => {
-	await client.query(
-		`INSERT INTO users (username, email, password) VALUES ($1, $2, $3);`,
-		[username, email, password]
-	);
+	const query = `INSERT INTO users (basic_info) VALUES ($1);`;
+	const newUser = { username, email, password };
+	await client.query(query, [newUser]);
 });
 
 const updateUser = asyncHandler(async () => {
