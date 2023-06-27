@@ -15,13 +15,17 @@ const jwt = require('jsonwebtoken');
 //@access          Public
 const registerUser = asyncHandler(async (req, res) => {
 	try {
-		const { username, email, password } = req.body;
+		const { username, email, password, confirmPassword } = req.body;
 
-		if (!username || !email || !password) {
+		if (!username || !email || !password || !confirmPassword) {
 			return res.status(400).send({
 				message: 'Please fillup all the required fields.',
 			});
 		}
+		if (password !== confirmPassword) {
+			return res.status(400).send({ message: 'Passwords do not match.' });
+		}
+
 		try {
 			const data = await queryUserByEmail(email);
 			const userAlreadyExists = data.rows;
