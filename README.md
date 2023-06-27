@@ -27,7 +27,7 @@ APIs for a Instagram-like platform where users can showcase their images.
 
 Before running the server setup your postgres database.
 
-- create `.env` in the root directory
+- Create `.env` in the root directory
 - Give your postgres infos in `.env`:
 
 ```
