@@ -21,10 +21,7 @@ APIs for a Instagram-like platform where users can showcase their images.
 - Start the server: `yarn dev`
 - If you get something like the following then everythin is in order :)
 
-```bash
->>> Server started at PORT 3000
->>> PostgreSQL connected at PORT 5000
-```
+  ![output](/extras/Screenshot%202023-06-28%20013927.png)
 
 ### PostgreSQL Setup:
 
