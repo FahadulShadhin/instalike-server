@@ -74,7 +74,7 @@ const authenticateUser = asyncHandler(async (req, res) => {
 					.status(400)
 					.send({ message: 'User not registered. Please sign up.' });
 			} else {
-				const pass = user[0].basic_info.password;
+				const pass = user[0].password;
 				if (pass !== md5(password)) {
 					return res.status(400).send({ message: 'Incorrect password' });
 				}

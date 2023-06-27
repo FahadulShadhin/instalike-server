@@ -15,9 +15,9 @@ const queryUserByEmail = asyncHandler(async (email) => {
 });
 
 const createUser = asyncHandler(async (username, email, password) => {
-	const query = `INSERT INTO users (basic_info) VALUES ($1);`;
-	const newUser = { username, email, password };
-	await client.query(query, [newUser]);
+	const query = `INSERT INTO users (password, basic_info) VALUES ($1, $2);`;
+	const newUser = { username, email };
+	await client.query(query, [password, newUser]);
 });
 
 const updateUser = asyncHandler(
