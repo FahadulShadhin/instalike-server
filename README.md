@@ -36,7 +36,7 @@ Before running the server setup your postgres database.
 ```
 PGUSER=<your_postgres_username>
 PGHOST=<your_postgres_host>
-PGDATABASE=<database_name>
+PGDATABASE=<your_database_name>
 PGPASSWORD=<your_postgres_password>
 PGPORT=<your_database_port>
 ```
