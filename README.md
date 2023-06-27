@@ -1,4 +1,8 @@
-# API Endpoints:
+# instalike_server
+
+APIs for a Instagram-like platform where users can showcase their images.
+
+## API Endpoints (completed):
 
 | Method | URL               | Description             |
 | ------ | ----------------- | ----------------------- |
