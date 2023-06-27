@@ -66,6 +66,7 @@ const registerUser = asyncHandler(async (req, res) => {
 const authenticateUser = asyncHandler(async (req, res) => {
 	try {
 		const { email, password } = req.body;
+
 		try {
 			const data = await queryUserByEmail(email);
 			const user = data.rows;
@@ -105,16 +106,23 @@ const authenticateUser = asyncHandler(async (req, res) => {
 const getUserProfile = asyncHandler(async (req, res) => {
 	try {
 		const userId = req.params.userId;
-		const data = await queryUserById(userId);
-		const user = data.rows;
-		if (user.length === 0) {
-			return res.status(404).send({ message: 'User not found.' });
+
+		try {
+			const data = await queryUserById(userId);
+			const user = data.rows;
+			if (user.length === 0) {
+				return res.status(404).send({ message: 'User not found.' });
+			}
+			res.status(200).send({ message: 'Success', data: user });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: 'Unexpected error occured while fetching data.' });
 		}
-		res.status(200).send({ message: 'Success', data: user });
 	} catch (err) {
-		return res
-			.status(500)
-			.send({ message: 'Unexpected error occured while fetching data.' });
+		return res.status(500).send({
+			message: 'Internal server error.',
+		});
 	}
 });
 
@@ -122,21 +130,27 @@ const getUserProfile = asyncHandler(async (req, res) => {
 //@route           PUT /api/user/:userId
 //@access          Protected
 const updateUserProfile = asyncHandler(async (req, res) => {
-	const userId = req.params.userId;
-	const updatedInfo = req.body;
-
 	try {
-		await updateUser(
-			updatedInfo.basic_info,
-			updatedInfo.interest,
-			updatedInfo.account_info,
-			userId
-		);
-		return res.status(200).send({ message: 'Update successful.' });
+		const userId = req.params.userId;
+		const updatedInfo = req.body;
+
+		try {
+			await updateUser(
+				updatedInfo.basic_info,
+				updatedInfo.interest,
+				updatedInfo.account_info,
+				userId
+			);
+			return res.status(200).send({ message: 'Update successful.' });
+		} catch (err) {
+			res
+				.status(500)
+				.send({ message: 'Unexpected error occured while updating info.' });
+		}
 	} catch (err) {
-		res
-			.status(500)
-			.send({ message: 'Unexpected error occured while updating info.' });
+		return res.status(500).send({
+			message: 'Internal server error.',
+		});
 	}
 });
 
@@ -144,15 +158,21 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 //@route           DELETE /api/user/:userId
 //@access          Protected
 const deleteAccount = asyncHandler(async (req, res) => {
-	const userId = req.params.userId;
-
 	try {
-		await deleteUser(userId);
-		return res.status(200).send({ message: 'Account deleted successfully.' });
+		const userId = req.params.userId;
+
+		try {
+			await deleteUser(userId);
+			return res.status(200).send({ message: 'Account deleted successfully.' });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: 'Unexpected error occured while deleting user.' });
+		}
 	} catch (err) {
-		return res
-			.status(500)
-			.send({ message: 'Unexpected error occured while deleting user.' });
+		return res.status(500).send({
+			message: 'Internal server error.',
+		});
 	}
 });
 
