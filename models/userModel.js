@@ -20,8 +20,24 @@ const createUser = asyncHandler(async (username, email, password) => {
 	await client.query(query, [newUser]);
 });
 
-const updateUser = asyncHandler(async () => {
-	console.log('update');
-});
+const updateUser = asyncHandler(
+	async (basic_info, interest, account_info, id) => {
+		const query = `
+			UPDATE users
+			SET 
+				basic_info = $1::jsonb,
+				interest = $2::jsonb,
+				account_info = $3::jsonb
+			WHERE id = $4;
+			`;
+		const values = [
+			JSON.stringify(basic_info),
+			JSON.stringify(interest),
+			JSON.stringify(account_info),
+			id,
+		];
+		await client.query(query, values);
+	}
+);
 
 module.exports = { queryUserById, queryUserByEmail, createUser, updateUser };

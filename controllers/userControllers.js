@@ -1,5 +1,10 @@
 const asyncHandler = require('express-async-handler');
-const { queryUserByEmail, createUser } = require('../models/userModel');
+const {
+	queryUserByEmail,
+	createUser,
+	queryUserById,
+	updateUser,
+} = require('../models/userModel');
 const variables = require('../config/variables');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
@@ -93,8 +98,48 @@ const authenticateUser = asyncHandler(async (req, res) => {
 	}
 });
 
-const userProfile = asyncHandler(async (req, res) => {
-	console.log('user profile');
+//@description     Get user details
+//@route           GET /api/user/:userId
+//@access          Protected
+const getUserProfile = asyncHandler(async (req, res) => {
+	try {
+		const userId = req.params.userId;
+		const data = await queryUserById(userId);
+		const user = data.rows;
+		if (!user) {
+			return res.status(404).send({ message: 'User not found.' });
+		}
+		res.status(200).send({ message: 'Success', data: user });
+	} catch (err) {
+		return res
+			.status(500)
+			.send({ message: 'Unexpected error occured while fetching data.' });
+	}
 });
 
-module.exports = { registerUser, authenticateUser, userProfile };
+//@description     Update user details
+//@route           POST /api/user/:userId
+//@access          Protected
+const updateUserProfile = asyncHandler(async (req, res) => {
+	const userId = req.params.userId;
+	const updatedInfo = req.body;
+
+	try {
+		await updateUser(
+			updatedInfo.basic_info,
+			updatedInfo.interest,
+			updatedInfo.account_info,
+			userId
+		);
+		return res.status(200).send({ message: 'Update successful.' });
+	} catch (err) {
+		res.status(500).send({ message: 'Unexpected error while updating info.' });
+	}
+});
+
+module.exports = {
+	registerUser,
+	authenticateUser,
+	getUserProfile,
+	updateUserProfile,
+};
