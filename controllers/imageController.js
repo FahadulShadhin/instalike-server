@@ -10,7 +10,7 @@ const uploadImage = asyncHandler(async (req, res) => {
 
 		try {
 			await addImage(userId, imagePath, description);
-			return res.status(200).send({ message: 'Image upload successful.' });
+			return res.status(201).send({ message: 'Image upload successful.' });
 		} catch (err) {
 			return res
 				.status(500)
