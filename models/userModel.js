@@ -20,18 +20,18 @@ const createUser = asyncHandler(async (username, email, password) => {
 });
 
 const updateUser = asyncHandler(
-	async (basic_info, interest, account_info, id) => {
+	async (basic_info, interests, account_info, id) => {
 		const query = `
 			UPDATE users
 			SET 
 				basic_info = $1::jsonb,
-				interest = $2::jsonb,
+				interests = $2::jsonb,
 				account_info = $3::jsonb
 			WHERE id = $4;
 			`;
 		const values = [
 			JSON.stringify(basic_info),
-			JSON.stringify(interest),
+			JSON.stringify(interests),
 			JSON.stringify(account_info),
 			id,
 		];

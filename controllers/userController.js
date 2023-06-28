@@ -141,7 +141,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 		try {
 			await updateUser(
 				updatedInfo.basic_info,
-				updatedInfo.interest,
+				updatedInfo.interests,
 				updatedInfo.account_info,
 				userId
 			);
