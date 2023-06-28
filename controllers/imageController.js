@@ -1,5 +1,45 @@
 const asyncHandler = require('express-async-handler');
-const { addImage, deleteImage } = require('../models/imagesModel');
+const {
+	queryImageDetailsById,
+	addImage,
+	deleteImage,
+} = require('../models/imagesModel');
+const { queryUserById } = require('../models/userModel');
+
+//@description     Get image details
+//@route           GET /api/image/:imgId
+//@access          Public
+const getImageDetails = asyncHandler(async (req, res) => {
+	try {
+		const imgId = req.params.imgId;
+
+		try {
+			const data = await queryImageDetailsById(imgId);
+			const imgData = data.rows[0];
+			const ownerId = imgData.user_id;
+			const ownerDetails = await queryUserById(ownerId);
+			const ownerBasicInfo = ownerDetails.rows[0].basic_info;
+
+			const imageDetails = {
+				image_data: imgData,
+				owner_data: ownerBasicInfo,
+			};
+
+			if (imgData.length === 0) {
+				return res.status(404).send({ message: 'Image not found.' });
+			}
+			return res.status(200).send({ message: 'Success', data: imageDetails });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: 'Unexpected error occured while fetching image.' });
+		}
+	} catch (err) {
+		return res.status(500).send({
+			message: 'Internal server error.',
+		});
+	}
+});
 
 //@description     Upload image
 //@route           POST /api/image/
@@ -48,4 +88,4 @@ const removeImage = asyncHandler(async (req, res) => {
 	}
 });
 
-module.exports = { uploadImage, removeImage };
+module.exports = { getImageDetails, uploadImage, removeImage };

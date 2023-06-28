@@ -1,11 +1,11 @@
 const asyncHandler = require('express-async-handler');
 const { client } = require('../config/db');
 
-// const getImageById = asyncHandler(async (imgId) => {
-// 	const query = `SELECT id FROM images WHERE id = $1`;
-// 	const res = await client.query(query, [imgId]);
-// 	return res;
-// });
+const queryImageDetailsById = asyncHandler(async (imgId) => {
+	const query = `SELECT * FROM images WHERE id = $1`;
+	const res = await client.query(query, [imgId]);
+	return res;
+});
 
 const addImage = asyncHandler(async (userId, filepath, description) => {
 	const query = `
@@ -21,4 +21,4 @@ const deleteImage = asyncHandler(async (imgId, userId) => {
 	await client.query(query, [imgId, userId]);
 });
 
-module.exports = { addImage, deleteImage };
+module.exports = { queryImageDetailsById, addImage, deleteImage };

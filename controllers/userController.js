@@ -114,6 +114,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 		try {
 			const data = await queryUserById(userId);
 			const user = data.rows;
+
 			if (user.length === 0) {
 				return res.status(404).send({ message: 'User not found.' });
 			}
