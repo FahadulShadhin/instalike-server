@@ -9,7 +9,7 @@ APIs for a Instagram-like platform where users can showcase their images.
 | POST   | `/api/user/register` | Register new user                                             | No             |
 | POST   | `/api/user/login`    | Sign in user                                                  | No             |
 | GET    | `/api/user/:id`      | Get user information                                          | Yes            |
-| DELETE | `/api/user/:id`      | Delete user account                                           | Yes            |
+| DELETE | `/api/user/:id`      | Remove user account (set status to `deactivated`)             | Yes            |
 | PUT    | `/api/user/:id`      | Update user information                                       | Yes            |
 | POST   | `/api/image`         | Upload image                                                  | Yes            |
 | DELETE | `/api/image/:imgId`  | User can delete an image if he/she is the owner of that image | Yes            |
