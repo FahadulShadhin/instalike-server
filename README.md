@@ -11,6 +11,7 @@ APIs for a Instagram-like platform where users can showcase their images.
 | GET    | `/api/user/:id`      | Get user information    |
 | DELETE | `/api/user/:id`      | Delete user account     |
 | PUT    | `/api/user/:id`      | Update user information |
+| POST   | `/api/image`         | Upload image            |
 
 ## Setup:
 
