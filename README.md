@@ -19,7 +19,7 @@ APIs for a Instagram-like platform where users can showcase their images.
 - `cd` to root directory
 - Install the dependencies: `yarn install`
 - Start the server: `yarn dev`
-- If you get something like the following then everythin is in order :)
+- If you get something like the following then everythin is in order 🫡
 
   <img alt="output" src="./extras/Screenshot%202023-06-28%20013927.png" width="300">
 
