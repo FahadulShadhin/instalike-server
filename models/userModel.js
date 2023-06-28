@@ -39,8 +39,12 @@ const updateUser = asyncHandler(
 	}
 );
 
-const deleteUser = asyncHandler(async (id) => {
-	const query = `DELETE FROM users WHERE id = $1;`;
+const dactivateAccount = asyncHandler(async (id) => {
+	const query = `
+		UPDATE users
+		SET account_info = jsonb_set(account_info, '{status}', '"deactivated"')
+		WHERE id = $1;
+	`;
 	await client.query(query, [id]);
 });
 
@@ -49,5 +53,5 @@ module.exports = {
 	queryUserByEmail,
 	createUser,
 	updateUser,
-	deleteUser,
+	dactivateAccount,
 };

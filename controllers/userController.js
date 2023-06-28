@@ -4,7 +4,7 @@ const {
 	createUser,
 	queryUserById,
 	updateUser,
-	deleteUser,
+	dactivateAccount,
 } = require('../models/userModel');
 const variables = require('../config/variables');
 const md5 = require('md5');
@@ -166,7 +166,7 @@ const deleteAccount = asyncHandler(async (req, res) => {
 		const userId = req.params.userId;
 
 		try {
-			await deleteUser(userId);
+			await dactivateAccount(userId);
 			return res.status(200).send({ message: 'Account deleted successfully.' });
 		} catch (err) {
 			return res
