@@ -4,15 +4,15 @@ APIs for a Instagram-like platform where users can showcase their images.
 
 ## API Endpoints (completed):
 
-| Method | URL                  | Description                                                                 |
-| ------ | -------------------- | --------------------------------------------------------------------------- |
-| POST   | `/api/user/register` | Register new user                                                           |
-| POST   | `/api/user/login`    | Signin user                                                                 |
-| GET    | `/api/user/:id`      | Get user information                                                        |
-| DELETE | `/api/user/:id`      | Delete user account                                                         |
-| PUT    | `/api/user/:id`      | Update user information                                                     |
-| POST   | `/api/image`         | Upload image                                                                |
-| DELETE | `/api/image/:imgId`  | Authenticated user can delete an image if he/she is the owner of that image |
+| Method | URL                  | Description                                                                 | Login Required |
+| ------ | -------------------- | --------------------------------------------------------------------------- | -------------- |
+| POST   | `/api/user/register` | Register new user                                                           | No             |
+| POST   | `/api/user/login`    | Sign in user                                                                | No             |
+| GET    | `/api/user/:id`      | Get user information                                                        | Yes            |
+| DELETE | `/api/user/:id`      | Delete user account                                                         | Yes            |
+| PUT    | `/api/user/:id`      | Update user information                                                     | Yes            |
+| POST   | `/api/image`         | Upload image                                                                | Yes            |
+| DELETE | `/api/image/:imgId`  | Authenticated user can delete an image if he/she is the owner of that image | Yes            |
 
 ## Setup:
 
