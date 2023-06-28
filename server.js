@@ -3,6 +3,8 @@ const express = require('express');
 const { connectDB } = require('./config/db');
 const variables = require('./config/variables');
 const userRoutes = require('./routes/userRoutes');
+require('./schemas/usersSchema');
+require('./schemas/imagesSchema');
 
 connectDB();
 const app = express();
