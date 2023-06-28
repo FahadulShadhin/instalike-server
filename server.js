@@ -1,6 +1,6 @@
 require('colors');
 const express = require('express');
-const { connectDB } = require('./config/db');
+const { client, connectDB } = require('./config/db');
 const variables = require('./config/variables');
 const userRoutes = require('./routes/userRoutes');
 require('./schemas/usersSchema');
@@ -17,3 +17,8 @@ app.use('/api/user', userRoutes);
 app.listen(PORT, () =>
 	console.log(`>>> Server started at PORT ${PORT}`.yellow.underline)
 );
+
+process.on('SIGINT', () => {
+	console.log('Server stopped!'.red);
+	client.end();
+});
