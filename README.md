@@ -43,7 +43,7 @@ PGPASSWORD=<your_postgres_password>
 PGPORT=<your_database_port>
 ```
 
-## TODOs:
+## Issues & Todos:
 
 - Admin
 - Refresh token for authentication.
