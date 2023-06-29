@@ -33,8 +33,8 @@ const getImages = asyncHandler(async (req, res) => {
 			const responseData = [];
 			for (const i in imgData) {
 				responseData.push({
-					imgData: imgData[i],
-					uploaderData: uploaderData[i],
+					image_data: imgData[i],
+					uploader_data: uploaderData[i],
 				});
 			}
 
