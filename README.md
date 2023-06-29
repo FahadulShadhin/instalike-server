@@ -42,6 +42,7 @@ PGPORT=<your_database_port>
 | GET    | `/api/image?page={page_num}&limit={limit}` | Get paginated images by offset and limit                      | ❌             |
 | GET    | `/api/image/:imgId`                        | Get image details                                             | ❌             |
 | DELETE | `/api/image/:imgId`                        | User can delete an image if he/she is the owner of that image | ✅             |
+| GET    | `/api/admin`                               | Admin can view all users list                                 | ✅             |
 
 ## Issues & Todos:
 
