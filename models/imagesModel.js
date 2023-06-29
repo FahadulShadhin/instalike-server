@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const { client } = require('../config/db');
 
 const queryImageDetailsById = asyncHandler(async (imgId) => {
-	const query = `SELECT * FROM images WHERE id = $1`;
+	const query = `SELECT * FROM images WHERE id = $1;`;
 	const res = await client.query(query, [imgId]);
 	return res;
 });
