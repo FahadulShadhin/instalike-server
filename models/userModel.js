@@ -20,11 +20,19 @@ const queryUserByEmail = asyncHandler(async (email) => {
 	return data;
 });
 
-const createUser = asyncHandler(async (username, email, password) => {
-	const query = `INSERT INTO users (password, basic_info) VALUES ($1, $2);`;
-	const newUser = { username, email };
-	await client.query(query, [password, newUser]);
+const queryAdminStatus = asyncHandler(async (id) => {
+	const query = `SELECT is_admin FROM users WHERE id = $1;`;
+	const data = await client.query(query, [id]);
+	return data;
 });
+
+const createUser = asyncHandler(
+	async (username, email, password, adminStatus) => {
+		const query = `INSERT INTO users (password, basic_info, is_admin) VALUES ($1, $2, $3);`;
+		const newUser = { username, email };
+		await client.query(query, [password, newUser, adminStatus]);
+	}
+);
 
 const updateUser = asyncHandler(
 	async (basic_info, interests, account_info, id) => {
@@ -61,4 +69,5 @@ module.exports = {
 	createUser,
 	updateUser,
 	dactivateAccount,
+	queryAdminStatus,
 };

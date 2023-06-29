@@ -15,7 +15,7 @@ const jwt = require('jsonwebtoken');
 //@access          Public
 const registerUser = asyncHandler(async (req, res) => {
 	try {
-		const { username, email, password, confirmPassword } = req.body;
+		const { username, email, password, confirmPassword, is_admin } = req.body;
 
 		if (!username || !email || !password || !confirmPassword) {
 			return res.status(400).send({
@@ -36,12 +36,12 @@ const registerUser = asyncHandler(async (req, res) => {
 					.send({ message: 'User already exists. No need to register again.' });
 			} else {
 				try {
-					const user = {
+					await createUser(
 						username,
 						email,
-						password: md5(password),
-					};
-					await createUser(user.username, user.email, user.password);
+						md5(password),
+						is_admin ? is_admin : false
+					);
 					return res.status(201).send({
 						message: 'User created successfully.',
 						data: { username: username, email: email },
