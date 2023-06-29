@@ -4,8 +4,8 @@ const { client, connectDB } = require('./config/db');
 const variables = require('./config/variables');
 const userRoutes = require('./routes/userRoutes');
 const imageRoutes = require('./routes/imageRoutes');
-require('./schemas/usersSchema');
-require('./schemas/imagesSchema');
+require('./models/schemas/usersSchema');
+require('./models/schemas/imagesSchema');
 
 connectDB();
 const app = express();

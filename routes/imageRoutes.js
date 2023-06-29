@@ -1,5 +1,6 @@
 const express = require('express');
 const {
+	getImages,
 	getImageDetails,
 	uploadImage,
 	removeImage,
@@ -9,6 +10,7 @@ const { authenticate } = require('../middlewares/authMIddleware');
 const router = express.Router();
 
 router.post('/', authenticate, uploadImage);
+router.get('/', getImages);
 router.get('/:imgId', getImageDetails);
 router.delete('/:imgId', authenticate, removeImage);
 

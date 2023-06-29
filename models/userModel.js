@@ -13,8 +13,7 @@ const queryUserById = asyncHandler(async (id) => {
 
 const queryUserByEmail = asyncHandler(async (email) => {
 	const query = `
-		SELECT id, basic_info, interests, account_info 
-		FROM users 
+		SELECT * FROM users 
 		WHERE basic_info->>'email' = $1;
 	`;
 	const data = await client.query(query, [email]);

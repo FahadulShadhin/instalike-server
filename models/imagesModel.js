@@ -1,10 +1,22 @@
 const asyncHandler = require('express-async-handler');
 const { client } = require('../config/db');
 
+const queryImages = asyncHandler(async (offset, limit) => {
+	const query = `SELECT * FROM images ORDER BY created_at DESC OFFSET $1 LIMIT $2;`;
+	const data = await client.query(query, [offset, limit]);
+	return data;
+});
+
+const queryTotalImageCount = asyncHandler(async () => {
+	const query = `SELECT COUNT(id) from images;`;
+	const totalImageCount = await client.query(query);
+	return totalImageCount;
+});
+
 const queryImageDetailsById = asyncHandler(async (imgId) => {
 	const query = `SELECT * FROM images WHERE id = $1;`;
-	const res = await client.query(query, [imgId]);
-	return res;
+	const data = await client.query(query, [imgId]);
+	return data;
 });
 
 const addImage = asyncHandler(async (userId, filepath, description) => {
@@ -21,4 +33,10 @@ const deleteImage = asyncHandler(async (imgId, userId) => {
 	await client.query(query, [imgId, userId]);
 });
 
-module.exports = { queryImageDetailsById, addImage, deleteImage };
+module.exports = {
+	queryImages,
+	queryTotalImageCount,
+	queryImageDetailsById,
+	addImage,
+	deleteImage,
+};

@@ -1,10 +1,66 @@
 const asyncHandler = require('express-async-handler');
 const {
+	queryImages,
+	queryTotalImageCount,
 	queryImageDetailsById,
 	addImage,
 	deleteImage,
 } = require('../models/imagesModel');
 const { queryUserById } = require('../models/userModel');
+
+//@description     Get paginated images by offset and limit
+//@route           GET /api/image/
+//@access          Public
+const getImages = asyncHandler(async (req, res) => {
+	try {
+		const { page, limit } = req.query;
+		const offset = (page - 1) * limit;
+
+		try {
+			const data = await queryImages(offset, limit);
+			const imgData = data.rows;
+			const uploaderIds = imgData.map((img) => img.user_id);
+			const uploaderData = [];
+			for (const id of uploaderIds) {
+				const data = await queryUserById(id);
+				const { basic_info, account_info } = data.rows[0];
+				uploaderData.push({
+					username: basic_info.username,
+					profileImage: basic_info.profile_image,
+					status: account_info.status,
+				});
+			}
+			const responseData = [];
+			for (const i in imgData) {
+				responseData.push({
+					imgData: imgData[i],
+					uploaderData: uploaderData[i],
+				});
+			}
+
+			const countData = await queryTotalImageCount();
+			const totalCount = parseInt(countData.rows[0].count, 10);
+			const totalPages = Math.ceil(totalCount / limit);
+
+			return res.status(200).send({
+				page: parseInt(page, 10),
+				limit: parseInt(limit, 10),
+				totalPages,
+				totalCount,
+				message: 'success',
+				data: responseData,
+			});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: 'Unexpected error occured while fetching images.' });
+		}
+	} catch (err) {
+		return res.status(500).send({
+			message: 'Internal server error.',
+		});
+	}
+});
 
 //@description     Get image details
 //@route           GET /api/image/:imgId
@@ -46,10 +102,11 @@ const getImageDetails = asyncHandler(async (req, res) => {
 //@access          Protected
 const uploadImage = asyncHandler(async (req, res) => {
 	try {
-		const { userId, imagePath, description } = req.body;
+		const { id } = req.user[0];
+		const { imagePath, description } = req.body;
 
 		try {
-			await addImage(userId, imagePath, description);
+			await addImage(id, imagePath, description);
 			return res.status(201).send({ message: 'Image upload successful.' });
 		} catch (err) {
 			return res
@@ -88,4 +145,4 @@ const removeImage = asyncHandler(async (req, res) => {
 	}
 });
 
-module.exports = { getImageDetails, uploadImage, removeImage };
+module.exports = { getImages, getImageDetails, uploadImage, removeImage };

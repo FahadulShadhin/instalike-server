@@ -1,4 +1,4 @@
-const { client } = require('../config/db');
+const { client } = require('../../config/db');
 require('colors');
 
 const createImagesTable = async () => {
