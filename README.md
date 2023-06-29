@@ -2,20 +2,6 @@
 
 APIs for a Instagram-like platform where users can showcase their images.
 
-## API Endpoints (completed):
-
-| Method | URL                                        | Description                                                   | Login Required |
-| ------ | ------------------------------------------ | ------------------------------------------------------------- | -------------- |
-| POST   | `/api/user/register`                       | Register new user                                             | ❌             |
-| POST   | `/api/user/login`                          | Sign in user                                                  | ❌             |
-| GET    | `/api/user/:id`                            | Get user information                                          | ✅             |
-| DELETE | `/api/user/:id`                            | Remove user account (set status to `deactivated`)             | ✅             |
-| PUT    | `/api/user/:id`                            | Update user information                                       | ✅             |
-| POST   | `/api/image`                               | Upload image                                                  | ✅             |
-| GET    | `/api/image?page={page_num}&limit={limit}` | Get paginated images by offset and limit                      | ❌             |
-| GET    | `/api/image/:imgId`                        | Get image details                                             | ❌             |
-| DELETE | `/api/image/:imgId`                        | User can delete an image if he/she is the owner of that image | ✅             |
-
 ## Setup:
 
 - Requires `node >= 18.14.0` and `yarn >= 1.22.19`
@@ -42,6 +28,20 @@ PGDATABASE=<your_database_name>
 PGPASSWORD=<your_postgres_password>
 PGPORT=<your_database_port>
 ```
+
+## API Endpoints (completed):
+
+| Method | URL                                        | Description                                                   | Login Required |
+| ------ | ------------------------------------------ | ------------------------------------------------------------- | -------------- |
+| POST   | `/api/user/register`                       | Register new user                                             | ❌             |
+| POST   | `/api/user/login`                          | Sign in user                                                  | ❌             |
+| GET    | `/api/user/:id`                            | Get user information                                          | ✅             |
+| DELETE | `/api/user/:id`                            | Remove user account (set status to `deactivated`)             | ✅             |
+| PUT    | `/api/user/:id`                            | Update user information                                       | ✅             |
+| POST   | `/api/image`                               | Upload image                                                  | ✅             |
+| GET    | `/api/image?page={page_num}&limit={limit}` | Get paginated images by offset and limit                      | ❌             |
+| GET    | `/api/image/:imgId`                        | Get image details                                             | ❌             |
+| DELETE | `/api/image/:imgId`                        | User can delete an image if he/she is the owner of that image | ✅             |
 
 ## Issues & Todos:
 
