@@ -137,7 +137,14 @@ const getUserProfile = asyncHandler(async (req, res) => {
 const updateUserProfile = asyncHandler(async (req, res) => {
 	try {
 		const userId = req.params.userId;
+		const authenticatedId = req.user[0].id;
 		const updatedInfo = req.body;
+
+		if (authenticatedId !== parseInt(userId, 10)) {
+			return res.status(403).send({
+				message: 'Forbidden action: Not authorized to edit this account.',
+			});
+		}
 
 		try {
 			await updateUser(
@@ -165,6 +172,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 const deleteAccount = asyncHandler(async (req, res) => {
 	try {
 		const userId = req.params.userId;
+		const authenticatedId = req.user[0].id;
+
+		if (authenticatedId !== parseInt(userId, 10)) {
+			return res.status(403).send({
+				message: 'Forbidden action: Not authorized to delete this account.',
+			});
+		}
 
 		try {
 			await dactivateAccount(userId);
