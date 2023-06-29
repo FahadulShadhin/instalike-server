@@ -42,3 +42,11 @@ PGDATABASE=<your_database_name>
 PGPASSWORD=<your_postgres_password>
 PGPORT=<your_database_port>
 ```
+
+## TODOs:
+
+- Admin
+- Refresh token for authentication.
+- Email confirmation for user registration.
+- Implement forgot password.
+- Improve profile update as for now it requires to put all the fields.
