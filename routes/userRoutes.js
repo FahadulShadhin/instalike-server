@@ -7,7 +7,6 @@ const {
 	deleteAccount,
 } = require('../controllers/userController');
 const { authenticate } = require('../middlewares/authMIddleware');
-const { checkAdminStatus } = require('../middlewares/checkAdminMiddeware');
 
 const router = express.Router();
 
