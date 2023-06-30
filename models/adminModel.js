@@ -7,4 +7,13 @@ const queryUsersList = asyncHandler(async () => {
 	return data;
 });
 
-module.exports = { queryUsersList };
+const editStatus = asyncHandler(async (id, newStatus) => {
+	const query = `
+		UPDATE users
+		SET account_info['status'] = to_jsonb($2::text)
+		WHERE id = $1;
+	`;
+	await client.query(query, [id, newStatus]);
+});
+
+module.exports = { queryUsersList, editStatus };
