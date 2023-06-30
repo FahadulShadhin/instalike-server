@@ -22,7 +22,7 @@ const getUsersList = asyncHandler(async (req, res) => {
 });
 
 //@description     Edit user status
-//@route           GET /api/admin/:userId
+//@route           PATCH /api/admin/:userId
 //@access          Protected
 const editUserStatus = asyncHandler(async (req, res) => {
 	try {
