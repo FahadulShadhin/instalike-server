@@ -76,7 +76,6 @@ const authenticateUser = asyncHandler(async (req, res) => {
 		try {
 			const data = await queryUserByEmail(email);
 			const user = data.rows;
-			console.log(user);
 
 			if (user.length === 0) {
 				return res
