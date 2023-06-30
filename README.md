@@ -29,6 +29,10 @@ PGPASSWORD=<your_postgres_password>
 PGPORT=<your_database_port>
 ```
 
+## Data Schema:
+
+<img alt="db schema" src="./extras/dbSchema.png">
+
 ## API Endpoints (completed):
 
 | Method | URL                                        | Description                                                   | Login Required |
