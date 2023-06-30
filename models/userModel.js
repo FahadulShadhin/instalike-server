@@ -26,6 +26,17 @@ const queryAdminStatus = asyncHandler(async (id) => {
 	return data;
 });
 
+const queryPasswordHash = asyncHandler(async (id) => {
+	const query = `SELECT password FROM users WHERE id = $1;`;
+	const data = await client.query(query, [id]);
+	return data;
+});
+
+const updatePassword = asyncHandler(async (id, newPassword) => {
+	const query = `UPDATE users SET password = $2 WHERE id = $1;`;
+	await client.query(query, [id, newPassword]);
+});
+
 const createUser = asyncHandler(
 	async (username, email, password, adminStatus) => {
 		const query = `INSERT INTO users (password, basic_info, is_admin) VALUES ($1, $2, $3);`;
@@ -70,4 +81,6 @@ module.exports = {
 	updateUser,
 	dactivateAccount,
 	queryAdminStatus,
+	queryPasswordHash,
+	updatePassword,
 };

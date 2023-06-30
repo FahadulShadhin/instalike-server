@@ -5,6 +5,8 @@ const {
 	queryUserById,
 	updateUser,
 	dactivateAccount,
+	queryPasswordHash,
+	updatePassword,
 } = require('../models/userModel');
 const variables = require('../config/variables');
 const md5 = require('md5');
@@ -74,6 +76,7 @@ const authenticateUser = asyncHandler(async (req, res) => {
 		try {
 			const data = await queryUserByEmail(email);
 			const user = data.rows;
+			console.log(user);
 
 			if (user.length === 0) {
 				return res
@@ -166,6 +169,44 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 	}
 });
 
+//@description     Change password
+//@route           PATCH /api/user/change_password
+//@access          Protected
+const changePassword = asyncHandler(async (req, res) => {
+	try {
+		const authId = req.user[0].id;
+		const { old_password, new_password } = req.body;
+
+		if (old_password === new_password) {
+			res
+				.status(400)
+				.send({ message: 'New password can not be same as before.' });
+		}
+
+		try {
+			const data = await queryPasswordHash(authId);
+			const userPassHash = data.rows[0].password;
+
+			if (md5(old_password) === userPassHash) {
+				await updatePassword(authId, md5(new_password));
+				return res.status(200).send({
+					message: 'Password changed successfully.',
+				});
+			} else {
+				return res.status(401).send({ message: 'Invalid password.' });
+			}
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: 'An error occured while changing password.' });
+		}
+	} catch (err) {
+		return res.status(500).send({
+			message: 'Internal server error.',
+		});
+	}
+});
+
 //@description     Delete user account
 //@route           DELETE /api/user/:userId
 //@access          Protected
@@ -201,4 +242,5 @@ module.exports = {
 	getUserProfile,
 	updateUserProfile,
 	deleteAccount,
+	changePassword,
 };
