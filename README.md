@@ -47,10 +47,11 @@ PGPORT=<your_database_port>
 | GET    | `/api/image/:imgId`                        | Get image details                                             | ❌             |
 | DELETE | `/api/image/:imgId`                        | User can delete an image if he/she is the owner of that image | ✅             |
 | GET    | `/api/admin`                               | Admin can view all users list                                 | ✅             |
+| PATCH  | `/api/admin/:userId`                       | Admin can edit user status                                    | ✅             |
 
 ## Issues & Todos:
 
-- Admin
+- Admin ✅
 - Refresh token for authentication.
 - Email confirmation for user registration.
 - Implement forgot password.
