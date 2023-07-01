@@ -44,7 +44,7 @@ PGPORT=<your_database_port>
 | DELETE | `/api/user/delete`                         | Remove user account (set status to `deactivated`)             | ✅             |
 | PATCH  | `/api/user/change_password`                | User can change password                                      | ✅             |
 | POST   | `/api/image`                               | Upload image                                                  | ✅             |
-| GET    | `/api/image?page={page_num}&limit={limit}` | Get paginated images by offset and limit                      | ❌             |
+| GET    | `/api/image?page={page_num}&limit={limit}` | Get paginated images by offset and limit (for dashboard)      | ❌             |
 | GET    | `/api/image/:imgId`                        | Get image details                                             | ❌             |
 | DELETE | `/api/image/:imgId`                        | User can delete an image if he/she is the owner of that image | ✅             |
 | GET    | `/api/admin`                               | Admin can view all users list                                 | ✅             |
