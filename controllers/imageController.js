@@ -22,12 +22,12 @@ const getImages = asyncHandler(async (req, res) => {
 			const uploaderIds = imgData.map((img) => img.user_id);
 			const uploaderData = [];
 			for (const id of uploaderIds) {
-				const data = await queryUserById(id);
-				const { basic_info, account_info } = data.rows[0];
+				const userData = await queryUserById(id);
+				const { username, profile_image_url, status } = userData.rows[0];
 				uploaderData.push({
-					username: basic_info.username,
-					profileImage: basic_info.profile_image,
-					status: account_info.status,
+					username,
+					profile_image_url,
+					status,
 				});
 			}
 			const responseData = [];
