@@ -7,8 +7,11 @@ const {
 	dactivateAccount,
 	queryPasswordHash,
 	updatePassword,
+	querySocialLinks,
+	queryInterests,
 } = require('../models/userModel');
 const variables = require('../config/variables');
+const { setClauses } = require('../utils');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 
@@ -148,20 +151,43 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 		const authId = req.user[0].id;
 		const updatedInfo = req.body;
 
-		try {
-			await updateUser(
-				updatedInfo.basic_info,
-				updatedInfo.interests,
-				updatedInfo.account_info,
-				authId
-			);
-			return res.status(200).send({ message: 'Update successful.' });
-		} catch (err) {
-			res.status(500).send({
-				error: err.message,
-				message: 'Unexpected error occured while updating info.',
-			});
+		const updated_interests = updatedInfo.interests;
+		const updated_social_links = updatedInfo.social_links;
+		const social_links_data = await querySocialLinks(authId);
+		const interests_data = await queryInterests(authId);
+		const old_social_links = social_links_data.rows[0].social_links;
+		const old_interests = interests_data.rows[0].interests;
+		const newInterests = [...new Set([...updated_interests, ...old_interests])];
+		const newSocialLinks = Object.values([
+			...new Set([updated_social_links, old_social_links].map(JSON.stringify)),
+		]).map(JSON.parse)[0];
+
+		const clauses = [];
+		const values = [];
+		let counter = 1;
+
+		for (const key in updatedInfo) {
+			if (typeof updatedInfo[key] === 'object' && key === 'interests') {
+				setClauses(key, JSON.stringify(newInterests), clauses, values, counter);
+			} else if (
+				typeof updatedInfo[key] === 'object' &&
+				key === 'social_links'
+			) {
+				setClauses(
+					key,
+					JSON.stringify(newSocialLinks),
+					clauses,
+					values,
+					counter
+				);
+			} else {
+				setClauses(key, updatedInfo[key], clauses, values, counter);
+			}
+			counter++;
 		}
+
+		await updateUser(clauses, values, counter, authId);
+		return res.status(200).send({ message: 'User update successful.' });
 	} catch (err) {
 		return res.status(500).send({
 			error: err.message,

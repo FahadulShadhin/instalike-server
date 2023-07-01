@@ -42,6 +42,18 @@ const queryPasswordHash = asyncHandler(async (id) => {
 	return data;
 });
 
+const querySocialLinks = asyncHandler(async (id) => {
+	const query = `SELECT social_links FROM users WHERE id = $1;`;
+	const data = await client.query(query, [id]);
+	return data;
+});
+
+const queryInterests = asyncHandler(async (id) => {
+	const query = `SELECT interests FROM users WHERE id = $1;`;
+	const data = await client.query(query, [id]);
+	return data;
+});
+
 const updatePassword = asyncHandler(async (id, newPassword) => {
 	const query = `UPDATE users SET password = $2 WHERE id = $1;`;
 	await client.query(query, [id, newPassword]);
@@ -54,25 +66,10 @@ const createUser = asyncHandler(
 	}
 );
 
-const updateUser = asyncHandler(
-	async (basic_info, interests, account_info, id) => {
-		const query = `
-			UPDATE users
-			SET 
-				basic_info = $1::jsonb,
-				interests = $2::jsonb,
-				account_info = $3::jsonb
-			WHERE id = $4;
-			`;
-		const values = [
-			JSON.stringify(basic_info),
-			JSON.stringify(interests),
-			JSON.stringify(account_info),
-			id,
-		];
-		await client.query(query, values);
-	}
-);
+const updateUser = asyncHandler(async (clauses, values, counter, id) => {
+	const query = `UPDATE users SET ${clauses.join(', ')} WHERE id = $${counter}`;
+	client.query(query, [...values, id]);
+});
 
 const dactivateAccount = asyncHandler(async (id) => {
 	const query = `
@@ -93,4 +90,6 @@ module.exports = {
 	queryPasswordHash,
 	updatePassword,
 	queryUserBasicInfo,
+	querySocialLinks,
+	queryInterests,
 };
