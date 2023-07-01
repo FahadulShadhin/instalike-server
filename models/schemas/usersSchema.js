@@ -19,7 +19,7 @@ const createUserTable = async () => {
 				status VARCHAR (255) DEFAULT 'active',
 				timezone VARCHAR (255) DEFAULT 'UTC',
 				created_at TIMESTAMP DEFAULT now(),
-				is_admin BOOLEAN
+				is_admin BOOLEAN DEFAULT false
       );
     `;
 		await client.query(createQuery);
