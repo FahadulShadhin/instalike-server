@@ -55,6 +55,5 @@ PGPORT=<your_database_port>
 - Refresh token for authentication.
 - Email confirmation for user registration.
 - Implement forgot password.
-- Improve profile update as for now it requires to put all the fields.
 - Add actual image as binary instead of file path?
 - Implement front-end for the app
