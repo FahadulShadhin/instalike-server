@@ -33,7 +33,7 @@ PGPORT=<your_database_port>
 
 <img alt="db schema" src="./extras/dbSchema.png">
 
-## API Endpoints (completed):
+## Completed Features:
 
 | Method | URL                                        | Description                                                   | Login Required |
 | ------ | ------------------------------------------ | ------------------------------------------------------------- | -------------- |
