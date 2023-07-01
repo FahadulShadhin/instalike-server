@@ -12,7 +12,8 @@ const {
 	queryInterests,
 } = require('../models/userModel');
 const variables = require('../config/variables');
-const { setClauses } = require('../utils');
+// const { setClauses } = require('../utils');
+const { setClauses } = require('../config/setQueryClauses');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 
@@ -157,16 +158,30 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 		const authId = req.user[0].id;
 		const updatedInfo = req.body;
 
-		const updated_interests = updatedInfo.interests;
-		const updated_social_links = updatedInfo.social_links;
-		const social_links_data = await querySocialLinks(authId);
-		const interests_data = await queryInterests(authId);
-		const old_social_links = social_links_data.rows[0].social_links;
-		const old_interests = interests_data.rows[0].interests;
-		const newInterests = [...new Set([...updated_interests, ...old_interests])];
-		const newSocialLinks = Object.values([
-			...new Set([updated_social_links, old_social_links].map(JSON.stringify)),
-		]).map(JSON.parse)[0];
+		const updatedInterests = updatedInfo.interests;
+		const updatedSocialLinks = updatedInfo.social_links;
+		const socialLinksData = await querySocialLinks(authId);
+		const interestsData = await queryInterests(authId);
+		const oldSocialLinks = socialLinksData.rows[0].social_links;
+		const oldInterests = interestsData.rows[0].interests;
+
+		// Initially a user registers with only username, email, password.
+		// So interests and sosial links is initially null
+		let newInterests;
+		if (oldInterests !== null) {
+			newInterests = [...new Set([...updatedInterests, ...oldInterests])];
+		} else {
+			newInterests = updatedInterests;
+		}
+
+		let newSocialLinks;
+		if (oldSocialLinks !== null) {
+			newSocialLinks = Object.values([
+				...new Set([updatedSocialLinks, oldSocialLinks].map(JSON.stringify)),
+			]).map(JSON.parse)[0];
+		} else {
+			newSocialLinks = updatedSocialLinks;
+		}
 
 		const clauses = [];
 		const values = [];
