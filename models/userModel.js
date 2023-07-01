@@ -39,7 +39,7 @@ const updatePassword = asyncHandler(async (id, newPassword) => {
 
 const createUser = asyncHandler(
 	async (username, email, password, adminStatus) => {
-		const query = `INSERT INTO users (password, username, email, is_admin) VALUES ($1, $2, $3);`;
+		const query = `INSERT INTO users (password, username, email, is_admin) VALUES ($1, $2, $3, $4);`;
 		await client.query(query, [password, username, email, adminStatus]);
 	}
 );

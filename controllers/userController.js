@@ -33,9 +33,9 @@ const registerUser = asyncHandler(async (req, res) => {
 			const userAlreadyExists = data.rows;
 
 			if (userAlreadyExists.length !== 0) {
-				return res
-					.status(400)
-					.send({ message: 'User already exists. No need to register again.' });
+				return res.status(400).send({
+					message: 'User already exists. No need to register again.',
+				});
 			} else {
 				try {
 					await createUser(
@@ -46,21 +46,24 @@ const registerUser = asyncHandler(async (req, res) => {
 					);
 					return res.status(201).send({
 						message: 'User created successfully.',
-						data: { username: username, email: email },
+						data: { username, email },
 					});
 				} catch (err) {
-					return res
-						.status(500)
-						.send({ message: 'Unexpected error occured while creating user.' });
+					return res.status(500).send({
+						error: err.message,
+						message: 'Unexpected error occured while creating user.',
+					});
 				}
 			}
 		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: 'Unexpected error occured while fetching data.' });
+			return res.status(500).send({
+				err: err.message,
+				message: 'Unexpected error occured while fetching data.',
+			});
 		}
 	} catch (err) {
 		return res.status(500).send({
+			error: err.message,
 			message: 'Internal server error.',
 		});
 	}
@@ -87,7 +90,7 @@ const authenticateUser = asyncHandler(async (req, res) => {
 					return res.status(400).send({ message: 'Incorrect password' });
 				}
 				const token = jwt.sign(
-					{ id: user[0].id, email: user[0].basic_info.email },
+					{ id: user[0].id, email: user[0].email },
 					variables.jwtSecretKey
 				);
 				return res
@@ -95,12 +98,14 @@ const authenticateUser = asyncHandler(async (req, res) => {
 					.send({ message: 'Successfully logged in.', token: token });
 			}
 		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: 'Unexpected error occured while fetching data.' });
+			return res.status(500).send({
+				error: err.message,
+				message: 'Unexpected error occured while fetching data.',
+			});
 		}
 	} catch (err) {
 		return res.status(500).send({
+			error: err.message,
 			message: 'Internal server error.',
 		});
 	}
@@ -122,12 +127,14 @@ const getUserProfile = asyncHandler(async (req, res) => {
 			}
 			res.status(200).send({ message: 'Success', data: user });
 		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: 'Unexpected error occured while fetching data.' });
+			return res.status(500).send({
+				error: err.message,
+				message: 'Unexpected error occured while fetching data.',
+			});
 		}
 	} catch (err) {
 		return res.status(500).send({
+			error: err.message,
 			message: 'Internal server error.',
 		});
 	}
@@ -150,12 +157,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 			);
 			return res.status(200).send({ message: 'Update successful.' });
 		} catch (err) {
-			res
-				.status(500)
-				.send({ message: 'Unexpected error occured while updating info.' });
+			res.status(500).send({
+				error: err.message,
+				message: 'Unexpected error occured while updating info.',
+			});
 		}
 	} catch (err) {
 		return res.status(500).send({
+			error: err.message,
 			message: 'Internal server error.',
 		});
 	}
@@ -188,14 +197,15 @@ const changePassword = asyncHandler(async (req, res) => {
 				return res.status(401).send({ message: 'Invalid password.' });
 			}
 		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: 'An error occured while changing password.' });
+			return res.status(500).send({
+				error: err.message,
+				message: 'An error occured while changing password.',
+			});
 		}
 	} catch (err) {
-		return res.status(500).send({
-			message: 'Internal server error.',
-		});
+		return res
+			.status(500)
+			.send({ error: err.message, message: 'Internal server error.' });
 	}
 });
 
@@ -210,12 +220,14 @@ const deleteAccount = asyncHandler(async (req, res) => {
 			await dactivateAccount(authId);
 			return res.status(200).send({ message: 'Account deleted successfully.' });
 		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: 'Unexpected error occured while deleting user.' });
+			return res.status(500).send({
+				error: err.message,
+				message: 'Unexpected error occured while deleting user.',
+			});
 		}
 	} catch (err) {
 		return res.status(500).send({
+			error: err.message,
 			message: 'Internal server error.',
 		});
 	}
