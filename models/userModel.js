@@ -20,6 +20,16 @@ const queryUserByEmail = asyncHandler(async (email) => {
 	return data;
 });
 
+const queryUserBasicInfo = asyncHandler(async (id) => {
+	const query = `
+		SELECT username, email, fullname, phone_no, profession, bio, profile_image_url, social_links, interests
+		FROM users 
+		WHERE id = $1;
+	`;
+	const data = await client.query(query, [id]);
+	return data;
+});
+
 const queryAdminStatus = asyncHandler(async (id) => {
 	const query = `SELECT is_admin FROM users WHERE id = $1;`;
 	const data = await client.query(query, [id]);
@@ -82,4 +92,5 @@ module.exports = {
 	queryAdminStatus,
 	queryPasswordHash,
 	updatePassword,
+	queryUserBasicInfo,
 };
