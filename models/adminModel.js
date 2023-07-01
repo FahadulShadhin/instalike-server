@@ -10,7 +10,7 @@ const queryUsersList = asyncHandler(async () => {
 const editStatus = asyncHandler(async (id, newStatus) => {
 	const query = `
 		UPDATE users
-		SET account_info['status'] = to_jsonb($2::text)
+		SET status = $2
 		WHERE id = $1;
 	`;
 	await client.query(query, [id, newStatus]);
