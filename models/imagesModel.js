@@ -19,12 +19,12 @@ const queryImageDetailsById = asyncHandler(async (imgId) => {
 	return data;
 });
 
-const addImage = asyncHandler(async (userId, filepath, description) => {
+const addImage = asyncHandler(async (userId, url, description) => {
 	const query = `
-    INSERT INTO images (user_id, filepath, description, created_at)
+    INSERT INTO images (user_id, img_url, description, created_at)
     VALUES ($1, $2, $3, now());
   `;
-	await client.query(query, [userId, filepath, description]);
+	await client.query(query, [userId, url, description]);
 });
 
 const deleteImage = asyncHandler(async (imgId, userId) => {
