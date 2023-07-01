@@ -3,7 +3,7 @@ const { client } = require('../config/db');
 
 const queryUserById = asyncHandler(async (id) => {
 	const query = `
-		SELECT id, basic_info, interests, account_info 
+		SELECT * 
 		FROM users 
 		WHERE id= $1;
 	`;
@@ -14,7 +14,7 @@ const queryUserById = asyncHandler(async (id) => {
 const queryUserByEmail = asyncHandler(async (email) => {
 	const query = `
 		SELECT * FROM users 
-		WHERE basic_info->>'email' = $1;
+		WHERE email = $1;
 	`;
 	const data = await client.query(query, [email]);
 	return data;
@@ -39,9 +39,8 @@ const updatePassword = asyncHandler(async (id, newPassword) => {
 
 const createUser = asyncHandler(
 	async (username, email, password, adminStatus) => {
-		const query = `INSERT INTO users (password, basic_info, is_admin) VALUES ($1, $2, $3);`;
-		const newUser = { username, email };
-		await client.query(query, [password, newUser, adminStatus]);
+		const query = `INSERT INTO users (password, username, email, is_admin) VALUES ($1, $2, $3);`;
+		await client.query(query, [password, username, email, adminStatus]);
 	}
 );
 
@@ -68,7 +67,7 @@ const updateUser = asyncHandler(
 const dactivateAccount = asyncHandler(async (id) => {
 	const query = `
 		UPDATE users
-		SET account_info = jsonb_set(account_info, '{status}', '"deactivated"')
+		SET status = 'deactivated'
 		WHERE id = $1;
 	`;
 	await client.query(query, [id]);

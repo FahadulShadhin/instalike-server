@@ -6,10 +6,20 @@ const createUserTable = async () => {
 		const createQuery = `
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
-        password VARCHAR (255),
-        basic_info JSONB,
-        interest JSONB,
-        account_info JSONB DEFAULT jsonb_build_object('created_at', now()::text, 'timezone', 'America/New_York', 'status', 'Active')
+        password VARCHAR (255) NOT NULL,
+				username VARCHAR (255) UNIQUE NOT NULL,
+				email VARCHAR (255) UNIQUE NOT NULL,
+				fullname VARCHAR (255),
+				phone_no VARCHAR (255),
+				profession VARCHAR (255),
+				bio TEXT,
+				profile_image_url VARCHAR (255),
+				social_links JSONB,
+        interests JSONB,
+				status VARCHAR (255) DEFAULT 'active',
+				timezone VARCHAR (255) DEFAULT 'UTC',
+				created_at TIMESTAMP DEFAULT now(),
+				is_admin BOOLEAN
       );
     `;
 		await client.query(createQuery);
@@ -41,6 +51,6 @@ const checkUserTableExists = async () => {
 	if (!usersExists) {
 		await createUserTable();
 	} else {
-		console.log('< users > table exists.'.blue);
+		console.log('users table exists.'.blue);
 	}
 })();

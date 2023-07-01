@@ -7,7 +7,7 @@ const createImagesTable = async () => {
       CREATE TABLE images (
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users (id),
-        filepath VARCHAR(255) NOT NULL,
+        img_url VARCHAR(255) NOT NULL,
         description TEXT,
         created_at TIMESTAMP DEFAULT now()
       );
@@ -41,6 +41,6 @@ const checkImagesTableExists = async () => {
 	if (!usersExists) {
 		await createImagesTable();
 	} else {
-		console.log('< images > table exists.'.blue);
+		console.log('images table exists.'.blue);
 	}
 })();
