@@ -37,7 +37,7 @@ PGPORT=<your_database_port>
 
 | Method | URL                                        | Description                                                   | Login Required |
 | ------ | ------------------------------------------ | ------------------------------------------------------------- | -------------- |
-| POST   | `/api/user/register`                       | Register new user                                             | ❌             |
+| POST   | `/api/user/register`                       | Register new user (with confirmation email)                   | ❌             |
 | POST   | `/api/user/login`                          | Sign in user                                                  | ❌             |
 | GET    | `/api/user/:id`                            | Get user information                                          | ✅             |
 | PUT    | `/api/user/update`                         | Update user information                                       | ✅             |
@@ -52,6 +52,5 @@ PGPORT=<your_database_port>
 
 ## Issues & Todos:
 
-- Email confirmation for user registration.
 - Implement forgot password.
 - Add actual image as binary instead of URL?
