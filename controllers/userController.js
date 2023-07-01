@@ -243,7 +243,7 @@ const deleteAccount = asyncHandler(async (req, res) => {
 		const authId = req.user[0].id;
 
 		try {
-			await dactivateAccount(authId);
+			await deactivateAccount(authId);
 			return res.status(200).send({ message: 'Account deleted successfully.' });
 		} catch (err) {
 			return res.status(500).send({
