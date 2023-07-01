@@ -8,11 +8,8 @@ const {
 	deactivateAccount,
 	queryPasswordHash,
 	updatePassword,
-	querySocialLinks,
-	queryInterests,
 } = require('../models/userModel');
 const variables = require('../config/variables');
-// const { setClauses } = require('../utils');
 const { setClauses } = require('../config/setQueryClauses');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
@@ -160,28 +157,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 		const updatedInterests = updatedInfo.interests;
 		const updatedSocialLinks = updatedInfo.social_links;
-		const socialLinksData = await querySocialLinks(authId);
-		const interestsData = await queryInterests(authId);
-		const oldSocialLinks = socialLinksData.rows[0].social_links;
-		const oldInterests = interestsData.rows[0].interests;
-
-		// Initially a user registers with only username, email, password.
-		// So interests and sosial links is initially null
-		let newInterests;
-		if (oldInterests !== null) {
-			newInterests = [...new Set([...updatedInterests, ...oldInterests])];
-		} else {
-			newInterests = updatedInterests;
-		}
-
-		let newSocialLinks;
-		if (oldSocialLinks !== null) {
-			newSocialLinks = Object.values([
-				...new Set([updatedSocialLinks, oldSocialLinks].map(JSON.stringify)),
-			]).map(JSON.parse)[0];
-		} else {
-			newSocialLinks = updatedSocialLinks;
-		}
 
 		const clauses = [];
 		const values = [];
@@ -189,14 +164,20 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 		for (const key in updatedInfo) {
 			if (typeof updatedInfo[key] === 'object' && key === 'interests') {
-				setClauses(key, JSON.stringify(newInterests), clauses, values, counter);
+				setClauses(
+					key,
+					JSON.stringify(updatedInterests),
+					clauses,
+					values,
+					counter
+				);
 			} else if (
 				typeof updatedInfo[key] === 'object' &&
 				key === 'social_links'
 			) {
 				setClauses(
 					key,
-					JSON.stringify(newSocialLinks),
+					JSON.stringify(updatedSocialLinks),
 					clauses,
 					values,
 					counter

@@ -42,18 +42,6 @@ const queryPasswordHash = asyncHandler(async (id) => {
 	return data;
 });
 
-const querySocialLinks = asyncHandler(async (id) => {
-	const query = `SELECT social_links FROM users WHERE id = $1;`;
-	const data = await client.query(query, [id]);
-	return data;
-});
-
-const queryInterests = asyncHandler(async (id) => {
-	const query = `SELECT interests FROM users WHERE id = $1;`;
-	const data = await client.query(query, [id]);
-	return data;
-});
-
 const updatePassword = asyncHandler(async (id, newPassword) => {
 	const query = `UPDATE users SET password = $2 WHERE id = $1;`;
 	await client.query(query, [id, newPassword]);
@@ -90,6 +78,4 @@ module.exports = {
 	queryPasswordHash,
 	updatePassword,
 	queryUserBasicInfo,
-	querySocialLinks,
-	queryInterests,
 };
