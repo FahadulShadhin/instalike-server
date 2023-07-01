@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const { sendConfirmationEmail } = require('../config/confirmationEmail');
 const {
 	queryUserByEmail,
 	createUser,
@@ -47,6 +48,10 @@ const registerUser = asyncHandler(async (req, res) => {
 						md5(password),
 						is_admin ? is_admin : false
 					);
+
+					// Send a confirmation email when account created.
+					sendConfirmationEmail(email);
+
 					return res.status(201).send({
 						message: 'User created successfully.',
 						data: { username, email },
