@@ -71,7 +71,7 @@ const updateUser = asyncHandler(async (clauses, values, counter, id) => {
 	client.query(query, [...values, id]);
 });
 
-const dactivateAccount = asyncHandler(async (id) => {
+const deactivateAccount = asyncHandler(async (id) => {
 	const query = `
 		UPDATE users
 		SET status = 'deactivated'
@@ -85,7 +85,7 @@ module.exports = {
 	queryUserByEmail,
 	createUser,
 	updateUser,
-	dactivateAccount,
+	deactivateAccount,
 	queryAdminStatus,
 	queryPasswordHash,
 	updatePassword,

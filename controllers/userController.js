@@ -4,7 +4,7 @@ const {
 	createUser,
 	queryUserById,
 	updateUser,
-	dactivateAccount,
+	deactivateAccount,
 	queryPasswordHash,
 	updatePassword,
 	querySocialLinks,
