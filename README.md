@@ -11,7 +11,7 @@ APIs for a Instagram-like platform where users can showcase their images.
 - Start the server: `yarn dev`
 - If you get something like the following then everythin is in order ✌️
 
-  <img alt="output" src="./extras/Screenshot%202023-06-28%20013927.png" width="300">
+  <img alt="output" src="./assets/Screenshot%202023-06-28%20013927.png" width="300">
 
 ### PostgreSQL Setup:
 
@@ -31,7 +31,7 @@ PGPORT=<your_database_port>
 
 ## Data Schema:
 
-<img alt="db schema" src="./extras/dbSchema.png">
+<img alt="db schema" src="./assets/dbSchema.png">
 
 ## Completed Features:
 
