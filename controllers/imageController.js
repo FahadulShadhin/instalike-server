@@ -51,12 +51,14 @@ const getImages = asyncHandler(async (req, res) => {
 				data: responseData,
 			});
 		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: 'Unexpected error occured while fetching images.' });
+			return res.status(500).send({
+				error: err.message,
+				message: 'Unexpected error occured while fetching images.',
+			});
 		}
 	} catch (err) {
 		return res.status(500).send({
+			error: err.message,
 			message: 'Internal server error.',
 		});
 	}
@@ -86,12 +88,14 @@ const getImageDetails = asyncHandler(async (req, res) => {
 			}
 			return res.status(200).send({ message: 'Success', data: imageDetails });
 		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: 'Unexpected error occured while fetching image.' });
+			return res.status(500).send({
+				error: err.message,
+				message: 'Unexpected error occured while fetching image.',
+			});
 		}
 	} catch (err) {
 		return res.status(500).send({
+			error: err.message,
 			message: 'Internal server error.',
 		});
 	}
@@ -109,12 +113,14 @@ const uploadImage = asyncHandler(async (req, res) => {
 			await addImage(id, imagePath, description);
 			return res.status(201).send({ message: 'Image upload successful.' });
 		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: 'Unexpected error occured while uploading image.' });
+			return res.status(500).send({
+				error: err.message,
+				message: 'Unexpected error occured while uploading image.',
+			});
 		}
 	} catch (err) {
 		return res.status(500).send({
+			error: err.message,
 			message: 'Internal server error.',
 		});
 	}
@@ -131,15 +137,20 @@ const removeImage = asyncHandler(async (req, res) => {
 		const imgId = req.params.imgId;
 
 		try {
-			await deleteImage(imgId, userId);
-			res.status(200).send({ message: 'Image deleted successfully.' });
+			const result = await deleteImage(imgId, userId);
+			if (result.rowCount === 0) {
+				return res.status(404).send({ message: 'Nothing to delete.' });
+			}
+			return res.status(200).send({ message: 'Image deleted successfully.' });
 		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: 'Unexpected error occured while deleting image.' });
+			return res.status(500).send({
+				error: err.message,
+				message: 'Unexpected error occured while deleting image.',
+			});
 		}
 	} catch (err) {
 		return res.status(500).send({
+			error: err.message,
 			message: 'Internal server error.',
 		});
 	}

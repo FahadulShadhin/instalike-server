@@ -30,7 +30,8 @@ const addImage = asyncHandler(async (userId, url, description) => {
 const deleteImage = asyncHandler(async (imgId, userId) => {
 	// Only owner of the image will be able to delete.
 	const query = `DELETE FROM images WHERE id = $1 AND user_id = $2;`;
-	await client.query(query, [imgId, userId]);
+	const result = await client.query(query, [imgId, userId]);
+	return result;
 });
 
 module.exports = {
