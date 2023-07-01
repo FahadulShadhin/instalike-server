@@ -52,8 +52,6 @@ PGPORT=<your_database_port>
 
 ## Issues & Todos:
 
-- Refresh token for authentication.
 - Email confirmation for user registration.
 - Implement forgot password.
-- Add actual image as binary instead of file path?
-- Implement front-end for the app
+- Add actual image as binary instead of URL?

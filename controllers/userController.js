@@ -94,7 +94,8 @@ const authenticateUser = asyncHandler(async (req, res) => {
 				}
 				const token = jwt.sign(
 					{ id: user[0].id, email: user[0].email },
-					variables.jwtSecretKey
+					variables.jwtSecretKey,
+					{ expiresIn: '30d' }
 				);
 				return res
 					.status(200)
