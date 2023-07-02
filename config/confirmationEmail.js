@@ -1,36 +1,43 @@
 require('colors');
+const nodemailer = require('nodemailer');
 const variables = require('./variables');
-const { spawn } = require('child_process');
 
 const sendConfirmationEmail = (emailReceiver) => {
-	const pythonScriptPath = variables.pythonScriptPath;
 	const emailSender = variables.emailSender;
-	const emailSenderPassword = variables.emailSenderPassword;
+	const emailPassword = variables.emailSenderPassword;
 
-	try {
-		const pythonProcess = spawn(variables.pythonExecuteCommand, [
-			pythonScriptPath,
-			emailSender,
-			emailSenderPassword,
-			emailReceiver,
-		]);
+	const emailSubject = 'Account created successfully';
+	const emailBody = `
+  Hello,
+  Your account is created successfully.
+  You can now login to your account: https://instalikedomain/login/
+`;
 
-		pythonProcess.on('error', (err) => {
-			console.error(`Error executing Python script: ${err}`.red);
-		});
+	// Create a transporter using SMTP settings
+	const transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: emailSender,
+			pass: emailPassword,
+		},
+	});
 
-		pythonProcess.on('close', (code) => {
-			if (code === 0) {
-				console.log(`Confirmation email sent successfully!`.green);
-			} else {
-				console.error(
-					`Python script execution failed with exit code: ${code}`.red
-				);
-			}
-		});
-	} catch (err) {
-		console.error(`Failed to execute Python script: ${err}`.red);
-	}
+	// Construct the email message
+	const mailOptions = {
+		from: emailSender,
+		to: emailReceiver,
+		subject: emailSubject,
+		text: emailBody,
+	};
+
+	// Send the email
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error) {
+			console.error('Error sending email:', error);
+		} else {
+			console.log('Email sent successfully:', info.response);
+		}
+	});
 };
 
 module.exports = { sendConfirmationEmail };

@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const appPort = process.env.APP_PORT;
+const appPort = process.env.PORT;
 const pgUser = process.env.PGUSER;
 const pgHost = process.env.PGHOST;
 const pgDatabase = process.env.PGDATABASE;
