@@ -7,7 +7,12 @@ const {
 	deleteImage,
 	queryUserId,
 } = require('../models/imagesModel');
-const { queryUserById, queryUserBasicInfo } = require('../models/userModel');
+const {
+	queryUserById,
+	queryUserBasicInfo,
+	queryInterests,
+	querySocials,
+} = require('../models/userModel');
 
 //@description     Get paginated images by offset and limit
 //@route           GET /api/image/
@@ -77,11 +82,15 @@ const getImageDetails = asyncHandler(async (req, res) => {
 			const imgData = data.rows[0];
 			const ownerId = imgData.user_id;
 			const ownerData = await queryUserBasicInfo(ownerId);
+			const ownerInterestsData = await queryInterests(ownerId);
+			const ownerSocialsData = await querySocials(ownerId);
 			const ownerBasicInfo = ownerData.rows[0];
+			const ownerInterests = ownerInterestsData.rows;
+			const ownerSocials = ownerSocialsData.rows;
 
 			const imageDetails = {
 				image_data: imgData,
-				owner_data: ownerBasicInfo,
+				owner_data: { ownerBasicInfo, ownerInterests, ownerSocials },
 			};
 
 			if (imgData.length === 0) {
