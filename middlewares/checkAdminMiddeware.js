@@ -8,7 +8,7 @@ const checkAdminStatus = asyncHandler(async (req, res, next) => {
 	if (isAdmin) {
 		next();
 	} else {
-		res.status(401).send({ message: 'Only for admin access.' });
+		return res.status(401).send({ message: 'Only for admin access.' });
 	}
 });
 module.exports = { checkAdminStatus };
