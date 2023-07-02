@@ -135,8 +135,8 @@ const removeImage = asyncHandler(async (req, res) => {
 		// req.uesr is set by the authentication middleware.
 		const authId = req.user[0].id;
 		const imgId = req.params.imgId;
-		const response = await queryUserById(imgId);
-		const userId = response.rows[0].id;
+		const response = await queryUserId(imgId);
+		const userId = response.rows[0].user_id;
 
 		if (authId !== userId) {
 			return res
