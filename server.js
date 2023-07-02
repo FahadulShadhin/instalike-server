@@ -7,6 +7,8 @@ const imageRoutes = require('./routes/imageRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 require('./models/schemas/usersSchema');
 require('./models/schemas/imagesSchema');
+require('./models/schemas/socialLInksSchema');
+require('./models/schemas/interestsSchema');
 
 connectDB();
 const app = express();

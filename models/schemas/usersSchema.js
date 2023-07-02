@@ -14,8 +14,6 @@ const createUserTable = async () => {
 				profession VARCHAR (255),
 				bio TEXT,
 				profile_image_url VARCHAR (255),
-				social_links JSONB,
-        interests JSONB,
 				status VARCHAR (255) DEFAULT 'active',
 				timezone VARCHAR (255) DEFAULT 'UTC',
 				created_at TIMESTAMP DEFAULT now(),
