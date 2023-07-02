@@ -2,6 +2,8 @@
 
 APIs for an Instagram-like platform where users can showcase their images.
 
+### [API Swagger Documentation](https://instalike.onrender.com/docs/)
+
 ## Setup:
 
 - Requires `node >= 18.14.0` and `yarn >= 1.22.19`
