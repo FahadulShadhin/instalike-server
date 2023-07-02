@@ -123,10 +123,10 @@ const authenticateUser = asyncHandler(async (req, res) => {
 //@access          Protected
 const getUserProfile = asyncHandler(async (req, res) => {
 	try {
-		const userId = req.params.userId;
+		const authId = req.user[0].id;
 
 		try {
-			const data = await queryUserById(userId);
+			const data = await queryUserById(authId);
 			const user = data.rows;
 
 			if (user.length === 0) {

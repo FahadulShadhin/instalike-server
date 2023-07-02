@@ -39,7 +39,7 @@ PGPORT=<your_database_port>
 | ------ | ------------------------------------------ | ------------------------------------------------------------- | -------------- |
 | POST   | `/api/user/register`                       | Register new user (with confirmation email)                   | ❌             |
 | POST   | `/api/user/login`                          | Sign in user                                                  | ❌             |
-| GET    | `/api/user/:id`                            | Get user information                                          | ✅             |
+| GET    | `/api/user/profile`                        | Get user profile information                                  | ✅             |
 | PUT    | `/api/user/update`                         | Update user information                                       | ✅             |
 | DELETE | `/api/user/delete`                         | Remove user account (set status to `deactivated`)             | ✅             |
 | PATCH  | `/api/user/change_password`                | User can change password                                      | ✅             |
@@ -54,3 +54,4 @@ PGPORT=<your_database_port>
 
 - Implement forgot password.
 - Add actual image as binary instead of URL?
+- Cropping and adjusting functionality while uploading image.
