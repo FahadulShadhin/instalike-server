@@ -35,6 +35,12 @@ const queryAdminStatus = asyncHandler(async (id) => {
 	return data;
 });
 
+const queryUesrStatus = asyncHandler(async (id) => {
+	const query = `SELECT status FROM users WHERE id = $1;`;
+	const data = await client.query(query, [id]);
+	return data;
+});
+
 const queryPasswordHash = asyncHandler(async (id) => {
 	const query = `SELECT password FROM users WHERE id = $1;`;
 	const data = await client.query(query, [id]);
@@ -77,4 +83,5 @@ module.exports = {
 	queryPasswordHash,
 	updatePassword,
 	queryUserBasicInfo,
+	queryUesrStatus,
 };

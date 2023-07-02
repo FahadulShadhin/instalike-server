@@ -6,12 +6,13 @@ const {
 	removeImage,
 } = require('../controllers/imageController');
 const { authenticate } = require('../middlewares/authMIddleware');
+const { checkUserStatus } = require('../middlewares/checkUserStatusMIddleware');
 
 const router = express.Router();
 
-router.post('/', authenticate, uploadImage);
+router.post('/', authenticate, checkUserStatus, uploadImage);
 router.get('/', getImages);
 router.get('/:imgId', getImageDetails);
-router.delete('/:imgId', authenticate, removeImage);
+router.delete('/:imgId', authenticate, checkUserStatus, removeImage);
 
 module.exports = router;
