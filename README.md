@@ -13,7 +13,7 @@ APIs for an Instagram-like platform where users can showcase their images.
 - Start the server: `yarn dev`
 - If you get something like the following then everything is in order ✌️
 
-  <img alt="output" src="./assets/Screenshot%202023-06-28%20013927.png" width="300">
+  <img alt="output" src="./assets/log.png" width="300">
 
 ### PostgreSQL Setup:
 
