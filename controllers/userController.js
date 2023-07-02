@@ -10,6 +10,10 @@ const {
 	updatePassword,
 	queryInterests,
 	querySocials,
+	addInterest,
+	addSocial,
+	deleteInterest,
+	deleteSocial,
 } = require('../models/userModel');
 const variables = require('../config/variables');
 const { setClauses } = require('../config/setQueryClauses');
@@ -168,40 +172,31 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 	try {
 		const authId = req.user[0].id;
 		const updatedInfo = req.body;
-		const updatedInterests = updatedInfo.interests;
-		const updatedSocialLinks = updatedInfo.social_links;
-
+		const newInterest = updatedInfo.add_interest;
+		const newSocialLink = updatedInfo.add_social_link;
+		const removeInterest = updatedInfo.remove_interest;
+		const removeSocialLink = updatedInfo.remove_social_link;
 		const clauses = [];
 		const values = [];
 		let counter = 1;
 
 		for (const key in updatedInfo) {
-			if (typeof updatedInfo[key] === 'object' && key === 'interests') {
-				setClauses(
-					key,
-					JSON.stringify(updatedInterests),
-					clauses,
-					values,
-					counter
-				);
-			} else if (
-				typeof updatedInfo[key] === 'object' &&
-				key === 'social_links'
+			if (
+				key !== 'add_interest' &&
+				key !== 'add_social_link' &&
+				key !== 'remove_interest' &&
+				key !== 'remove_social_link'
 			) {
-				setClauses(
-					key,
-					JSON.stringify(updatedSocialLinks),
-					clauses,
-					values,
-					counter
-				);
-			} else {
 				setClauses(key, updatedInfo[key], clauses, values, counter);
+				counter++;
 			}
-			counter++;
 		}
 
 		await updateUser(clauses, values, counter, authId);
+		await addInterest(authId, newInterest);
+		await addSocial(authId, newSocialLink);
+		await deleteInterest(authId, removeInterest);
+		await deleteSocial(authId, removeSocialLink);
 		return res.status(200).send({ message: 'User update successful.' });
 	} catch (err) {
 		return res.status(500).send({

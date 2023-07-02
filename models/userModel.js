@@ -76,6 +76,40 @@ const updateUser = asyncHandler(async (clauses, values, counter, id) => {
 	client.query(query, [...values, id]);
 });
 
+const addInterest = asyncHandler(async (userId, newInterest) => {
+	const query = `
+ 		INSERT INTO interests (user_id, interest)
+		VALUES ($1, $2);
+	`;
+	await client.query(query, [userId, newInterest]);
+});
+
+const addSocial = asyncHandler(async (userId, newSocial) => {
+	const query = `
+ 		INSERT INTO socials (user_id, social_link)
+		VALUES ($1, $2);
+	`;
+	await client.query(query, [userId, newSocial]);
+});
+
+const deleteInterest = asyncHandler(async (userId, interest) => {
+	const query = `
+		DELETE FROM interests
+		WHERE user_id = $1
+		AND interest = $2;
+	`;
+	await client.query(query, [userId, interest]);
+});
+
+const deleteSocial = asyncHandler(async (userId, socialLink) => {
+	const query = `
+		DELETE FROM socials
+		WHERE user_id = $1
+		AND social_link = $2;
+	`;
+	await client.query(query, [userId, socialLink]);
+});
+
 const deactivateAccount = asyncHandler(async (id) => {
 	const query = `
 		UPDATE users
@@ -98,4 +132,8 @@ module.exports = {
 	queryUesrStatus,
 	queryInterests,
 	querySocials,
+	addInterest,
+	addSocial,
+	deleteInterest,
+	deleteSocial,
 };
