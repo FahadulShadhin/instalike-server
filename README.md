@@ -35,6 +35,10 @@ PGPORT=<your_database_port>
 
 SQL file: [./assets/instalikeDB.sql](./assets/instalikeDB.sql)
 
+## Deployment Flow:
+
+<img alt="workflow" src="./assets/workflow.png">
+
 ## Completed Features:
 
 | Method | URL                                        | Description                                                   | Login Required |
