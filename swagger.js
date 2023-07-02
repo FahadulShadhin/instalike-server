@@ -39,7 +39,6 @@ function swaggerDocs(app, port) {
 		res.setHeader('Content-Type', 'application/json');
 		res.send(swaggerSpec);
 	});
-	console.log(`App running at PORT: ${port}`);
 }
 
 module.exports = { swaggerDocs };
