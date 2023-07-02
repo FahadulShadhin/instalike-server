@@ -4,6 +4,7 @@
 	"description": "Instagram-like platform to showcase cool images",
 	"main": "server.js",
 	"scripts": {
+		"start": "node server.js",
 		"dev": "nodemon server.js"
 	},
 	"author": "Shadhin",
