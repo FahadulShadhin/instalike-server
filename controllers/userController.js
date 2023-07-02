@@ -82,6 +82,12 @@ const authenticateUser = asyncHandler(async (req, res) => {
 	try {
 		const { email, password } = req.body;
 
+		if (!email || !password) {
+			return res.status(400).send({
+				message: 'Please fillup all the required fields.',
+			});
+		}
+
 		try {
 			const data = await queryUserByEmail(email);
 			const user = data.rows;
@@ -154,7 +160,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 	try {
 		const authId = req.user[0].id;
 		const updatedInfo = req.body;
-
 		const updatedInterests = updatedInfo.interests;
 		const updatedSocialLinks = updatedInfo.social_links;
 

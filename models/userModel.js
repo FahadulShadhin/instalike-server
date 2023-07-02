@@ -3,8 +3,7 @@ const { client } = require('../config/db');
 
 const queryUserById = asyncHandler(async (id) => {
 	const query = `
-		SELECT * 
-		FROM users 
+		SELECT * FROM users 
 		WHERE id= $1;
 	`;
 	const data = await client.query(query, [id]);
