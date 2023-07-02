@@ -5,6 +5,7 @@ const {
 	queryImageDetailsById,
 	addImage,
 	deleteImage,
+	queryUserId,
 } = require('../models/imagesModel');
 const { queryUserById, queryUserBasicInfo } = require('../models/userModel');
 
@@ -132,12 +133,20 @@ const uploadImage = asyncHandler(async (req, res) => {
 const removeImage = asyncHandler(async (req, res) => {
 	try {
 		// req.uesr is set by the authentication middleware.
-		const user = req.user;
-		const userId = user[0].id;
+		const authId = req.user[0].id;
 		const imgId = req.params.imgId;
+		const response = await queryUserById(imgId);
+		const userId = response.rows[0].id;
+
+		if (authId !== userId) {
+			return res
+				.status(401)
+				.send({ message: 'Not authorized to delete this image.' });
+		}
 
 		try {
-			const result = await deleteImage(imgId, userId);
+			const result = await deleteImage(imgId, authId);
+
 			if (result.rowCount === 0) {
 				return res.status(404).send({ message: 'Nothing to delete.' });
 			}

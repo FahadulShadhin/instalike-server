@@ -34,10 +34,17 @@ const deleteImage = asyncHandler(async (imgId, userId) => {
 	return result;
 });
 
+const queryUserId = asyncHandler(async (imgId) => {
+	const query = `SELECT user_id FROM images WHERE id = $1;`;
+	const result = await client.query(query, [imgId]);
+	return result;
+});
+
 module.exports = {
 	queryImages,
 	queryTotalImageCount,
 	queryImageDetailsById,
 	addImage,
 	deleteImage,
+	queryUserId,
 };
