@@ -1,6 +1,6 @@
 # instalike_server
 
-APIs for a Instagram-like platform where users can showcase their images.
+APIs for an Instagram-like platform where users can showcase their images.
 
 ## Setup:
 
