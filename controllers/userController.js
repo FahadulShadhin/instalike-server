@@ -8,6 +8,8 @@ const {
 	deactivateAccount,
 	queryPasswordHash,
 	updatePassword,
+	queryInterests,
+	querySocials,
 } = require('../models/userModel');
 const variables = require('../config/variables');
 const { setClauses } = require('../config/setQueryClauses');
@@ -132,13 +134,19 @@ const getUserProfile = asyncHandler(async (req, res) => {
 		const authId = req.user[0].id;
 
 		try {
-			const data = await queryUserById(authId);
-			const user = data.rows;
+			const userData = await queryUserById(authId);
+			const interestsData = await queryInterests(authId);
+			const socialsData = await querySocials(authId);
+			const user = userData.rows;
+			const interests = interestsData.rows;
+			const socials = socialsData.rows;
 
 			if (user.length === 0) {
 				return res.status(404).send({ message: 'User not found.' });
 			}
-			res.status(200).send({ message: 'Success', data: user });
+			res
+				.status(200)
+				.send({ message: 'Success', data: { user, interests, socials } });
 		} catch (err) {
 			return res.status(500).send({
 				error: err.message,

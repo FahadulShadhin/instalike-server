@@ -21,11 +21,23 @@ const queryUserByEmail = asyncHandler(async (email) => {
 
 const queryUserBasicInfo = asyncHandler(async (id) => {
 	const query = `
-		SELECT username, email, fullname, phone_no, profession, bio, profile_image_url, social_links, interests
-		FROM users 
+		SELECT username, email, fullname, phone_no, profession, bio, profile_image_url
+		FROM users
 		WHERE id = $1;
 	`;
 	const data = await client.query(query, [id]);
+	return data;
+});
+
+const queryInterests = asyncHandler(async (id) => {
+	const query = `SELECT interest FROM interests WHERE user_id = $1;`;
+	const data = client.query(query, [id]);
+	return data;
+});
+
+const querySocials = asyncHandler(async (id) => {
+	const query = `SELECT social_link FROM socials WHERE user_id = $1;`;
+	const data = client.query(query, [id]);
 	return data;
 });
 
@@ -84,4 +96,6 @@ module.exports = {
 	updatePassword,
 	queryUserBasicInfo,
 	queryUesrStatus,
+	queryInterests,
+	querySocials,
 };
