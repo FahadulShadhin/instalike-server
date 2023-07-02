@@ -9,8 +9,6 @@ const pgPort = process.env.PGPORT;
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
 const emailSender = process.env.EMAIL_SENDER;
 const emailSenderPassword = process.env.EMAIL_SENDER_PASSWORD;
-const pythonExecuteCommand = process.env.PYTHON_EXECUTE_COMMAND;
-const pythonScriptPath = process.env.PYTHON_SCRIPT_PATH;
 const variables = {
 	appPort,
 	pgUser,
@@ -21,8 +19,6 @@ const variables = {
 	jwtSecretKey,
 	emailSender,
 	emailSenderPassword,
-	pythonExecuteCommand,
-	pythonScriptPath,
 };
 
 module.exports = variables;
