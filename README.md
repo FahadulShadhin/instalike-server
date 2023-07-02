@@ -29,9 +29,11 @@ PGPASSWORD=<your_postgres_password>
 PGPORT=<your_database_port>
 ```
 
-## Data Schema:
+## DB Schema:
 
 <img alt="db schema" src="./assets/dbSchema.png">
+
+SQL file: [./assets/instalikeDB.sql](./assets/instalikeDB.sql)
 
 ## Completed Features:
 
