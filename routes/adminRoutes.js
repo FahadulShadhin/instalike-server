@@ -27,7 +27,7 @@ router.get('/', authenticate, checkAdminStatus, getUsersList);
 
 /**
  * @swagger
- * /api/admin/{usrid}:
+ * /api/admin/{userId}:
  *   patch:
  *     summary: Update User Status (Admin)
  *     security:

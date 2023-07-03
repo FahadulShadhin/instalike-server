@@ -98,7 +98,7 @@ router.get('/:imgId', getImageDetails);
 
 /**
  * @swagger
- * /api/image/{imageid}:
+ * /api/image/{imgId}:
  *   delete:
  *     summary: Delete Image
  *     security:
