@@ -61,5 +61,5 @@ PGPORT=<your_database_port>
 ## Issues & Todos:
 
 - Implement forgot password.
-- Add actual image as binary instead of URL?
+<!-- - Add actual image as binary instead of URL? -->
 - Cropping and adjusting functionality while uploading image.
