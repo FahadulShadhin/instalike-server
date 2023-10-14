@@ -35,7 +35,7 @@ PGPORT=<your_database_port>
 
 <img alt="db schema" src="./assets/dbSchema.png">
 
-SQL file: [./assets/instalikeDB.sql](./assets/instalikeDB.sql)
+<!-- SQL file: [./assets/instalikeDB.sql](./assets/instalikeDB.sql) -->
 
 ## Deployment Flow:
 
